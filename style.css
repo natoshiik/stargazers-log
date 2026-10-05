@@ -1,0 +1,49 @@
+body {
+     font-family: "Chiron GoRound TC", sans-serif;
+}
+
+.note {
+    width: 250px;
+    height: auto;
+    background-color: #FFEAF5;
+    padding: 15px;
+    border: 1px solid #f1d2e2;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px #a36dd28f;
+}
+
+input{
+    font-family: "Chiron GoRound TC", sans-serif;
+    background-color: #FFEAF5;
+    border: none;
+    font-size: 22px;
+    width: 100%;
+    border-bottom: 1px solid white;
+    padding: 5px 0px;
+}
+textarea {
+    font-family: "Chiron GoRound TC", sans-serif;
+    background-color: #FFEAF5;
+    border: none;
+    font-size: 18px;
+    width: 100%;
+    resize: none;
+    margin: 10px  0px;
+}
+
+.note_new {
+    background-color: #E6D9FF;
+    border: 0px solid;
+    border-radius: 30px;
+    padding: 10px 17px;
+    font-size: 28px;
+    color: white;
+}
+.note_delete, .note_save {
+    width: 10%
+}
+.action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
