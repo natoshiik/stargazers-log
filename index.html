@@ -16,6 +16,7 @@
     <div class="notes" id="notes">
         <div class="note" id="note_1" data-id="1">
             <div class="note_title">
+                <p></p>
                 <input type="text" name="note_title" value="" placeholder="Название заметки">
             </div>
             <div class="note_text">
@@ -29,18 +30,14 @@
         <button type="button" class="note_new" onclick="CreateNote()">+</button>
     </div>
 
-
-
-
-
-
+    
     <script>
-
 
         let note = 1;
         const conteiner = document.getElementById('notes');
 
-        function CreateNote(id = null, title = '', text = '') {
+        //Создание заметки
+        function CreateNote(id = null, title = '', text = '', dateStr = '') {
 
             if (id === null) {
                 note++;
@@ -48,9 +45,10 @@
             } else {
                 note = Math.max(note, Number(id));
             }
-
+            
             let note_content = `
         <div class="note_title">
+            <p>${dateStr}</p>
             <input 
                 type="text" 
                 name="note_title" 
@@ -63,7 +61,9 @@
         </div>
 
         <div class="action">
-            <img class="note_delete" src="delete.png" alt="">
+            <img class="note_delete" src="delete.png" alt=""
+            onclick="deleteNote(${id})"
+            >
             <img 
                 class="note_save" 
                 src="save.png" 
@@ -85,29 +85,38 @@
 
         }
 
+        //СОхранение заметки
         function SaveNote(id) {
 
             let note = document.querySelector('#note_' + id);
-
+            let time = document.querySelector('p');
+            let now = new Date();
+            let dateStr = now.toLocaleDateString('ru-RU') + ', ' + String(now.getHours()).padStart(2, '0')+':'+ String(now.getMinutes()).padStart(2, '0');
+            time.innerHTML = dateStr;
             let title = note.querySelector('.note_title input').value;
             let text = note.querySelector('.note_text textarea').value;
 
             let noteData = {
                 id: id,
                 title: title,
-                text: text
+                text: text,
+                time: dateStr
             };
 
             localStorage.setItem(`note-${id}`, JSON.stringify(noteData));
+            console.log(localStorage.getItem(`note-${id}`));
         }
 
+        //Поиск и загрузка всех сохраненных заметок
         function loadNotes() {
 
             for (let i = 0; i < localStorage.length; i++) {
 
                 const key = localStorage.key(i);
-
-                if (!key.startsWith('note-')) continue;
+                console.log(key);
+                if (key == 'note-undefined') continue;
+                //if (!key.startsWith('note-')) continue;
+                console.log(i);
 
                 const savedNote = localStorage.getItem(key);
                 const noteData = JSON.parse(savedNote);
@@ -131,7 +140,8 @@
                     CreateNote(
                         noteData.id,
                         noteData.title,
-                        noteData.text
+                        noteData.text,
+                        noteData.time
                     );
                 }
             }
@@ -139,10 +149,29 @@
         }
 
         loadNotes();
-        document.querySelector('textarea').addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = `${this.scrollHeight}px`;
+
+        //Блок растягивался по содержимому
+        const textareas = document.querySelectorAll('textarea');
+
+        textareas.forEach(textarea => {
+            const setHeight = () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = `${textarea.scrollHeight}px`;
+            };
+
+
+            setHeight();
+
+            textarea.addEventListener('input', setHeight);
+            textarea.addEventListener('scroll', setHeight);
         });
+
+        function deleteNote(id) {
+            let key = localStorage.key(`note-${id}`)
+            localStorage.removeItem(key);
+            const element = document.getElementById('note_' + id);
+            element.remove();
+        }
     </script>
 </body>
 
