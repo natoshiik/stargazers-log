@@ -1,5 +1,18 @@
 body {
-     font-family: "Chiron GoRound TC", sans-serif;
+
+    font-family: "Chiron GoRound TC", sans-serif;
+}
+
+.notes {
+    column-count: 4;
+    column-gap: 16px;
+    width: 70%;
+    margin: 0 auto;
+}
+p {
+    margin: 0px;
+    color: #766684;
+    text-align: right;
 }
 
 .note {
@@ -10,9 +23,11 @@ body {
     border: 1px solid #f1d2e2;
     border-radius: 20px;
     box-shadow: 0px 0px 5px #a36dd28f;
+    break-inside: avoid;
+    margin-bottom: 20px;
 }
 
-input{
+input {
     font-family: "Chiron GoRound TC", sans-serif;
     background-color: #FFEAF5;
     border: none;
@@ -21,6 +36,7 @@ input{
     border-bottom: 1px solid white;
     padding: 5px 0px;
 }
+
 textarea {
     font-family: "Chiron GoRound TC", sans-serif;
     background-color: #FFEAF5;
@@ -28,7 +44,7 @@ textarea {
     font-size: 18px;
     width: 100%;
     resize: none;
-    margin: 10px  0px;
+    margin: 10px 0px;
 }
 
 .note_new {
@@ -39,9 +55,13 @@ textarea {
     font-size: 28px;
     color: white;
 }
-.note_delete, .note_save {
-    width: 10%
+
+.note_delete,
+.note_save {
+    width: 10%;
+    cursor: pointer;
 }
+
 .action {
     display: flex;
     flex-direction: row;
